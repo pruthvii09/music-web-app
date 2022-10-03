@@ -4,10 +4,13 @@ import { app } from "../../config/firebase.config";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 import { FcGoogle } from "react-icons/fc";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
-const Login = () => {
+const Login = ({ setAuth }) => {
   const firebaseAuth = getAuth(app);
   const provider = new GoogleAuthProvider();
+  const navigate = useNavigate();
 
   // const loginWithGoogle = async () => {
   //   signInWithPopup(firebaseAuth, provider)
@@ -35,9 +38,30 @@ const Login = () => {
 
   const loginWithGoogle = async () => {
     signInWithPopup(firebaseAuth, provider).then((userCred) => {
-      console.log(userCred);
+      if (userCred) {
+        setAuth(true);
+        window.localStorage.setItem("auth", "true");
+
+        firebaseAuth.onAuthStateChanged((userCred) => {
+          if (userCred) {
+            userCred.getIdToken().then((token) => {
+              console.log(token);
+            });
+            navigate("/", { replace: true });
+          } else {
+            setAuth(false);
+            navigate("/login");
+          }
+        });
+      }
     });
   };
+
+  useEffect(() => {
+    if (window.localStorage.getItem("auth") === "true") {
+      navigate("/", { replace: true });
+    }
+  });
 
   return (
     <div className="relative w-screen h-screen">

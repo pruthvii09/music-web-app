@@ -31,7 +31,7 @@ const App = () => {
     <div className='w-screen h-screen bg-slate-50 flex justify-center
      items-center'>
       <Routes>
-        <Route path="/login" element={ <Login /> }/>
+        <Route path="/login" element={ <Login setAuth={setAuth} /> }/>
         <Route path='/*' element={<Home />} />
       </Routes>
      </div>
