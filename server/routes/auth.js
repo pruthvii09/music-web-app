@@ -21,7 +21,7 @@ router.get("/login", async (req, res) => {
             if(!userExist){
                 newUserData(decodeValue, req, res)
             }else{
-                return res.send("Update user")
+                updateNewUserData(decodeValue, req, res)
             }
         }
     } catch (error) {
@@ -33,7 +33,7 @@ const newUserData = async (decodeValue, req, res) => {
     const newUser = new user({
         name : decodeValue.name,
         email : decodeValue.email,
-        imageURL : decodeValue.imageURL,
+        imageURL : decodeValue.picture,
         user_id : decodeValue.user_id,
         email_verified : decodeValue.email_verified,
         role : "member",
@@ -42,6 +42,26 @@ const newUserData = async (decodeValue, req, res) => {
     try {
         const savedUser = await newUser.save()
         res.status(200).send({user : savedUser})
+    } catch (error) {
+        res.status(400).send({success : false, msg : error})
+    }
+}
+
+const updateNewUserData = async (decodeValue, req, res) => {
+    const filter = {user_id : decodeValue.user_id}
+
+    const options = {
+        upsert : true,
+        new : true
+    };
+
+    try {
+        const result = await user.findOneAndUpdate(
+            filter,
+            {auth_time : decodeValue.auth_time},
+            options
+        );
+        res.status(200).send({user : result})
     } catch (error) {
         res.status(400).send({success : false, msg : error})
     }

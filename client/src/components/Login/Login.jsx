@@ -7,10 +7,18 @@ import { FcGoogle } from "react-icons/fc";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
+import { useStateValue } from "../../context/stateProvider";
+import { actionType } from "../../context/reducer";
+import { validateUser } from "../../api";
+
+import { LoginBg } from "../../assets/video";
+
 const Login = ({ setAuth }) => {
   const firebaseAuth = getAuth(app);
   const provider = new GoogleAuthProvider();
   const navigate = useNavigate();
+
+  const [{ user }, dispatch] = useStateValue();
 
   // const loginWithGoogle = async () => {
   //   signInWithPopup(firebaseAuth, provider)
@@ -45,11 +53,21 @@ const Login = ({ setAuth }) => {
         firebaseAuth.onAuthStateChanged((userCred) => {
           if (userCred) {
             userCred.getIdToken().then((token) => {
-              console.log(token);
+              // console.log(token);
+              validateUser(token).then((data) => {
+                dispatch({
+                  type: actionType.SET_USER,
+                  user: data,
+                });
+              });
             });
             navigate("/", { replace: true });
           } else {
             setAuth(false);
+            dispatch({
+              type: actionType.SET_USER,
+              user: null,
+            });
             navigate("/login");
           }
         });
@@ -65,6 +83,14 @@ const Login = ({ setAuth }) => {
 
   return (
     <div className="relative w-screen h-screen">
+      <video
+        src={LoginBg}
+        type="video/mp4"
+        autoPlay
+        muted
+        loop
+        className="w-full h-full object-cover"
+      />
       <div className="absolute inset-0 bg-darkOverlay flex items-center justify-center p-4">
         <div
           className="w-full md:w-375 p-4 bg-lightOverlay shadow-2xl rounded-md
