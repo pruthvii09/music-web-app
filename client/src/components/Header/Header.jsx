@@ -114,8 +114,17 @@ const Header = () => {
             <p className="text-base text-textColor hover:font-semibold duraation-150 transition-all ease-in-out">
               My Favourites
             </p>
-
             <hr />
+            {user?.user?.role === "admin" && (
+              <>
+                <NavLink to={"/dashboard/home"}>
+                  <p className="text-base text-textColor hover:font-semibold duraation-150 transition-all ease-in-out">
+                    Dashboard
+                  </p>
+                </NavLink>
+                <hr />
+              </>
+            )}
 
             <p
               className="text-base text-textColor hover:font-semibold duraation-150 transition-all ease-in-out"
