@@ -11,24 +11,24 @@ app.get("/", (req, res) => {
     return res.json("Hiii")
 })
 
-// user authentication
+//  user authentication
 
 const userRoute = require("./routes/auth");
 app.use("/api/users/", userRoute);
 
-// Artist 
+// ! Artist 
 
 const artistRoutes = require("./routes/artist")
 app.use("/api/artist/", artistRoutes)
 
-// Album
+// ! Album
 
 const albumRoutes = require("./routes/album")
 app.use("/api/albums/", albumRoutes)
 
-//Songs
+// ! Songs
 
-const songRoutes = require("./routes/song")
+const songRoutes = require("./routes/songs")
 app.use("/api/songs/", songRoutes)
 
 mongoose.connect("mongodb+srv://admin:admin@music.vyvvrmu.mongodb.net/?retryWrites=true&w=majority", {useNewUrlParser : true});
