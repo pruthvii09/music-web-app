@@ -8,3 +8,5 @@ export {default as Dashboard} from "./Dashboard/Dashboard";
 export {default as DashboardHome} from "./Dashboard/DashboardHome";
 export {default as DashboardSong} from "./Dashboard/DashboardSong";
 export {default as DashboardUsers} from "./Dashboard/DashboardUsers";
+export {default as DashboardArtist} from "./Dashboard/DashboardArtist";
+export {default as DashboardAlbums} from "./Dashboard/DashboardAlbums"
