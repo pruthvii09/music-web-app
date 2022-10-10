@@ -40,9 +40,9 @@ const DashboardHome = () => {
           ...data,
           allUsers: data.data,
         });
-        console.log("DATA.DATA : ", data.data);
-        console.log("ALL USERS : ", allUsers);
-        console.log("LENGTH : ", allUsers?.length);
+        // console.log("DATA.DATA : ", data.data);
+        // console.log("ALL USERS : ", allUsers);
+        // console.log("LENGTH : ", allUsers?.length);
       });
     }
     if (!allSongs) {

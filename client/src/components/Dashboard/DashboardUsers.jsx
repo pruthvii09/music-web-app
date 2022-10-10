@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { moment } from "moment";
 
-import { changingUserRole, getAllUsers } from "../../api";
+import { changingUserRole, getAllUsers, removeUser } from "../../api";
 import { actionType } from "../../context/reducer";
 import { useStateValue } from "../../context/stateProvider";
+
+import { MdDelete } from "react-icons/md";
 
 export const DashboardUserCard = ({ data, index }) => {
   // console.log(data, index);
@@ -15,17 +16,28 @@ export const DashboardUserCard = ({ data, index }) => {
   const UpdateUserRole = (userId, role) => {
     // console.log(userId, role);
     setIsUserRoleUpdated(false);
-    useEffect(() => {
-      if (!allUsers) {
-        changingUserRole(userId, role).then((res) => {
-          if (res) {
-            getAllUsers().then((data) => {
-              dispatch({
-                type: actionType.SET_ALL_USERS,
-                allUsers: data.data,
-              });
-            });
-          }
+    changingUserRole(userId, role).then((res) => {
+      if (res) {
+        getAllUsers().then((data) => {
+          dispatch({
+            type: actionType.SET_ALL_USERS,
+            allUsers: data.data,
+          });
+          console.log(data.data);
+        });
+      }
+    });
+  };
+
+  const deleteUser = (userId) => {
+    removeUser(userId).then((res) => {
+      if (res) {
+        getAllUsers().then((data) => {
+          dispatch({
+            type: actionType.SET_ALL_USERS,
+            allUsers: data.data,
+          });
+          console.log(data.data);
         });
       }
     });
@@ -39,6 +51,15 @@ export const DashboardUserCard = ({ data, index }) => {
       className=" relative w-full rounded-md flex items-center justify-between
     py-4 bg-lightOverlay cursor-pointer hover:bg-card hover:shadow-md"
     >
+      {data._id !== user?.user._id && (
+        <motion.div
+          whileTap={{ scale: 0.75 }}
+          className="absolute left-4 w-8 h-8 rounded-md flex items-center justify-center bg-gray-200"
+          onClick={() => deleteUser(data._id)}
+        >
+          <MdDelete className=" text-xl text-red-400 hover:text-red-500" />
+        </motion.div>
+      )}
       {/* user image  */}
       <div className="w-275 min-w-[160px] flex ites-center justify-center">
         <img
@@ -79,7 +100,7 @@ export const DashboardUserCard = ({ data, index }) => {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.5 }}
             className="absolute z-10 top-6 right-4 p-6 flex items-start flex-col
-        gap-4 shadow-xl bg-white rpunded-md"
+        gap-4 shadow-xl bg-white rpunded-md "
           >
             <p className="text-textColor text-[12px] font-semibold">
               Are you sure, do you really want to mark the user as

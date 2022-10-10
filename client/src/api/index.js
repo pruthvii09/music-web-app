@@ -1,4 +1,5 @@
 import axios from "axios";
+import { MdRouter } from "react-icons/md";
 
 const baseURL = "http://localhost:4000/";
 
@@ -27,7 +28,7 @@ export const getAllUsers = async () => {
 // get all artist
 export const getAllArtist = async () => {
   try {
-    const res = await axios.get(`${baseURL}api/artists/getAll`);
+    const res = await axios.get(`${baseURL}api/artist/getAll`);
     return res.data;
   } catch (error) {
     return null;
@@ -56,9 +57,18 @@ export const getAllSongs = async () => {
 
 export const changingUserRole = async (userId, role) => {
   try {
-    const res = await axios.get(`${baseURL}api/users/updateRole/${userId}`, {
+    const res = axios.put(`${baseURL}api/users/updateRole/${userId}`, {
       data: { role: role },
     });
+    return res;
+  } catch (error) {
+    return null;
+  }
+};
+
+export const removeUser = async (userId) => {
+  try {
+    const res = axios.delete(`${baseURL}api/users/deleteUser/${userId}`);
     return res;
   } catch (error) {
     return null;
