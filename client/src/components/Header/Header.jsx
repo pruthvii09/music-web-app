@@ -80,13 +80,13 @@ const Header = () => {
       <div
         onMouseEnter={() => setIsMenu(true)}
         onMouseLeave={() => setIsMenu(false)}
-        className="flex items-center ml-auto cursor-pointer"
+        className="flex items-center ml-auto gap-4 cursor-pointer"
       >
         <img
           src={user?.user.imageURL}
           alt=""
           referrerPolicy="no-referrer"
-          className="w-12 h-12 min-w-[44px] object-cover rounded-full shadow-lg"
+          className="w-12 h-12 min-w-[44px] ml-[20px] object-cover rounded-full shadow-lg"
         />
         <div className="flex flex-col">
           <p className="text-textColor text-lg hover:text-headingColor font-semibold">

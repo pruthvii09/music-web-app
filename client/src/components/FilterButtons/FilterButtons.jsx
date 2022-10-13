@@ -10,7 +10,8 @@ const FilterButtons = ({ filterData, flag }) => {
   const [filterName, setFilterName] = useState(null);
   const [filterMenu, setFilterMenu] = useState(false);
 
-  const [{ artistFilter, albumFilter, filterTerm }, dispatch] = useStateValue();
+  const [{ artistFilter, albumFilter, filterTerm, languageFilter }, dispatch] =
+    useStateValue();
 
   const updateFilterButton = (name) => {
     setFilterName(name);

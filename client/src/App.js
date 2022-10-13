@@ -11,10 +11,11 @@ import { useStateValue } from "./context/stateProvider";
 import { actionType } from "./context/reducer";
 
 const App = () => {
+  typeof window !== "undefined" && (window.React = React);
   const firebaseAuth = getAuth(app);
   const navigate = useNavigate();
 
-  const [{user}, dispatch] = useStateValue()
+  const [{ user }, dispatch] = useStateValue();
 
   const [authState, setAuthState] = useState(false);
 
@@ -30,18 +31,18 @@ const App = () => {
           validateUser(token).then((data) => {
             // console.log(data)
             dispatch({
-              type : actionType.SET_USER,
-              user : data,
-            })
-          })
+              type: actionType.SET_USER,
+              user: data,
+            });
+          });
         });
       } else {
         setAuthState(false);
         window.localStorage.setItem("auth", "false");
         dispatch({
-          type : actionType.SET_USER,
-          user : null,
-        })
+          type: actionType.SET_USER,
+          user: null,
+        });
         navigate("/login");
       }
     });
