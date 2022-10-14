@@ -83,3 +83,21 @@ export const saveNewSong = async (data) => {
     return null;
   }
 };
+
+export const saveNewArtist = async (data) => {
+  try {
+    const res = axios.post(`${baseURL}api/artist/save`, { ...data });
+    return (await res).data.savedArtist;
+  } catch (error) {
+    return null;
+  }
+};
+
+export const saveNewAlbum = async (data) => {
+  try {
+    const res = axios.post(`${baseURL}api/albums/save`, { ...data });
+    return (await res).data.savedAlbum;
+  } catch (error) {
+    return null;
+  }
+};
