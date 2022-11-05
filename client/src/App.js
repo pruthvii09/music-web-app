@@ -9,6 +9,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { validateUser } from "./api";
 import { useStateValue } from "./context/stateProvider";
 import { actionType } from "./context/reducer";
+import MusicPlayer from "./components/MusicPlayer/MusicPlayer";
 
 const App = () => {
   typeof window !== "undefined" && (window.React = React);
@@ -65,7 +66,9 @@ const App = () => {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             className={`fixed min-w-[700] h-26 inset-x-0 bottom-0 bg-cardOverlay drop-shadow-2xl backdrop-blur-md flex items-center justify-center`}
-          ></motion.div>
+          >
+            <MusicPlayer />
+          </motion.div>
         )}
       </div>
     </AnimatePresence>

@@ -6,10 +6,12 @@ import { useStateValue } from "../../context/stateProvider";
 import { getAllSongs } from "../../api";
 import { actionType } from "../../context/reducer";
 import SongCard from "./SongCard";
+import { motion } from "framer-motion";
 
 const DashboardSong = () => {
   const [songFilter, setSongFilter] = useState("");
   const [isFocus, setIsFocus] = useState(false);
+  const [filteredSongs, setFilteredSongs] = useState(null);
   const [{ allSongs }, dispatch] = useStateValue();
 
   useEffect(() => {
@@ -23,6 +25,20 @@ const DashboardSong = () => {
       });
     }
   }, []);
+
+  useEffect(() => {
+    if (songFilter.length > 0) {
+      const filtered = allSongs.filter(
+        (data) =>
+          data.artist.toLowerCase().includes(songFilter) ||
+          data.language.toLowerCase().includes(songFilter) ||
+          data.name.toLowerCase().includes(songFilter)
+      );
+      setFilteredSongs(filtered);
+    } else {
+      setFilteredSongs(null);
+    }
+  }, [songFilter]);
 
   return (
     <div className="w-full p-4 flex items-center justify-center flex-col">
@@ -45,9 +61,17 @@ const DashboardSong = () => {
           onFocus={() => setIsFocus(true)}
         />
 
-        <i>
+        <motion.i
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          whileTap={{ scale: 0.75 }}
+          onClick={() => {
+            setSongFilter("");
+            setFilteredSongs(null);
+          }}
+        >
           <AiOutlineClear className="text-3xl text-textColor cursor-pointer" />
-        </i>
+        </motion.i>
       </div>
 
       {/* main Conatiner  */}
@@ -58,10 +82,10 @@ const DashboardSong = () => {
             <span className="text-sm font-semibold text-textColor">
               Count :{" "}
             </span>
-            {allSongs?.length}
+            {filteredSongs ? filteredSongs?.length : allSongs?.length}
           </p>
         </div>
-        <SongContainer data={allSongs} />
+        <SongContainer data={filteredSongs ? filteredSongs : allSongs} />
       </div>
     </div>
   );
