@@ -58,6 +58,7 @@ const DashboardNewSong = () => {
       albumFilter,
       filterTerm,
       languageFilter,
+      alertType,
     },
     dispatch,
   ] = useStateValue();
@@ -85,19 +86,54 @@ const DashboardNewSong = () => {
     if (isImage) {
       setIsImageLoading(true);
       setIsAudioLoading(true);
+      setIsAlbumUploading(true);
+      setIsArtistUploading(true);
+      dispatch({
+        type: actionType.SET_ALERT_TYPE,
+        alertType: "success",
+      });
+      setInterval(() => {
+        dispatch({
+          type: actionType.SET_ALERT_TYPE,
+          alertType: "null",
+        });
+      }, 4000);
     }
     const deleteRef = ref(storage, url);
     deleteObject(deleteRef).then(() => {
+      dispatch({
+        type: actionType.SET_ALERT_TYPE,
+        alertType: "danger",
+      });
+      setInterval(() => {
+        dispatch({
+          type: actionType.SET_ALERT_TYPE,
+          alertType: "null",
+        });
+      }, 4000);
       setSongImageCover(null);
       setAudioImageCover(null);
+      setAlbumImageCover(null);
+      setArtistImageCover(null);
       setIsImageLoading(false);
       setIsAudioLoading(false);
+      setIsAlbumUploading(false);
+      setIsArtistUploading(false);
     });
   };
 
   const saveSong = () => {
     if (!songImageCover || !audioImageCover) {
-      // alert
+      dispatch({
+        type: actionType.SET_ALERT_TYPE,
+        alertType: "danger",
+      });
+      setInterval(() => {
+        dispatch({
+          type: actionType.SET_ALERT_TYPE,
+          alertType: "null",
+        });
+      }, 4000);
     } else {
       setIsAudioLoading(true);
       setIsImageLoading(true);
@@ -119,6 +155,18 @@ const DashboardNewSong = () => {
           });
         });
       });
+      dispatch({
+        type: actionType.SET_ALERT_TYPE,
+        alertType: "success",
+      });
+      console.log(alertType);
+      console.log("Saved Artist");
+      setInterval(() => {
+        dispatch({
+          type: actionType.SET_ALERT_TYPE,
+          alertType: "null",
+        });
+      }, 4000);
 
       setSongName(null);
       setIsAudioLoading(false);
@@ -134,7 +182,7 @@ const DashboardNewSong = () => {
 
   const saveArtist = () => {
     if (!artistImageCover || !artistName || !twitter || !instagram) {
-      // Alert message
+      //  error
     } else {
       setIsArtistUploading(true);
       const data = {
@@ -160,7 +208,7 @@ const DashboardNewSong = () => {
 
   const saveAlbum = () => {
     if (!albumImageCover || !albumName) {
-      // error
+      //  eooro
     } else {
       console.log("Hi");
       setIsAlbumUploading(true);
@@ -461,6 +509,7 @@ export const FileUploader = ({
   isLoading,
   isImage,
 }) => {
+  const [{ alertType }, dispatch] = useStateValue();
   const uploadFile = (e) => {
     isLoading(true);
     const uploadedFile = e.target.files[0];

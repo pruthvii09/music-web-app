@@ -30,7 +30,7 @@ export const DashboardCard = ({ icon, name, count }) => {
 };
 
 const DashboardHome = () => {
-  const [{ allUsers, allSongs, allAlbums, allArtists }, dispatch] =
+  const [{ allUsers, allSongs, allAlbums, artists }, dispatch] =
     useStateValue();
   useEffect(() => {
     if (!allUsers) {
@@ -55,9 +55,9 @@ const DashboardHome = () => {
       });
     }
 
-    // if (!allArtists) {
+    // if (!artists) {
     //   getAllArtist().then((data) => {
-    //     dispatch({ type: actionType.SET_ARTISTS, allArtists: data.artist });
+    //     dispatch({ type: actionType.SET_ARTISTS, artists: data.artist });
     //   });
     //   console.log(data.artist);
     // }
@@ -67,7 +67,7 @@ const DashboardHome = () => {
         dispatch({ type: actionType.SET_ALL_ALBUMNS, allAlbums: data.album });
       });
     }
-  }, [!allUsers, !allAlbums, !allSongs, !allArtists]);
+  }, [!allUsers, !allAlbums, !allSongs, !artists]);
   return (
     <div className="w-full p-6 flex items-center justify-evenly flex-wrap">
       <DashboardCard
