@@ -1,0 +1,26 @@
+{
+  "name": "music-web-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "npm run dev --prefix server",
+    "client": "npm start --prefix client",
+    "start": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pruthvii09/music-web-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pruthvii09/music-web-app/issues"
+  },
+  "homepage": "https://github.com/pruthvii09/music-web-app#readme",
+  "dependencies": {
+    "concurrently": "^7.5.0"
+  }
+}

@@ -4,6 +4,8 @@ const app = express();
 const cors = require("cors");
 const { default: mongoose } = require("mongoose");
 
+const dotenv = require("dotenv");
+dotenv.config();
 app.use(cors({ origin: true }));
 app.use(express.json());
 
@@ -31,10 +33,7 @@ app.use("/api/albums/", albumRoutes);
 const songRoutes = require("./routes/songs");
 app.use("/api/songs/", songRoutes);
 
-mongoose.connect(
-  "mongodb+srv://admin:admin@music.vyvvrmu.mongodb.net/?retryWrites=true&w=majority",
-  { useNewUrlParser: true }
-);
+mongoose.connect(process.env.MONGODB_CONNECTION, { useNewUrlParser: true });
 mongoose.connection
   .once("open", () => console.log("Connected"))
   .on("error", (error) => {
