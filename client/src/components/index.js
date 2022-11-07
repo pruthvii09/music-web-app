@@ -17,3 +17,9 @@ export { default as FilterButtons } from "./FilterButtons/FilterButtons";
 export { default as Alert } from "./AlertMsg/Alert";
 
 export { default as musicPlayer } from "./MusicPlayer/MusicPlayer";
+
+export { default as Filter } from "./Filter/Filter";
+
+export { default as Searchbar } from "./SearchBar/Searchbar";
+
+export { default as Profile } from "./ProfileCard/Profile";

@@ -11,6 +11,7 @@ import { actionType } from "../../context/reducer";
 import { IoTrash } from "react-icons/io5";
 import { storage } from "../../config/firebase.config";
 import { deleteObject, ref } from "firebase/storage";
+import { BsHeart } from "react-icons/bs";
 
 const SongCard = ({ data, index, type }) => {
   const [isDelete, setIsDelete] = useState(false);
@@ -72,6 +73,8 @@ const SongCard = ({ data, index, type }) => {
     }
   };
 
+  const [like, setLike] = useState(false);
+
   return (
     <motion.div
       whileHover={{ scale: 1.05 }}
@@ -104,6 +107,12 @@ const SongCard = ({ data, index, type }) => {
           onClick={() => setIsDelete(true)}
         >
           <IoTrash />
+        </motion.i>
+        <motion.i
+          whileTap={{ scale: 0.75 }}
+          className="text-base text-red-400 ml-2 hover:text-red-600 drop-shadow-md"
+        >
+          <BsHeart className="ml-5" />
         </motion.i>
       </div>
 
